@@ -4,7 +4,7 @@ const Card = ({ tech, handleClickModal }) => {
   return (
     <Container onClick={() => handleClickModal(tech)}>
       <span >{tech.title}</span>
-      <span>{tech.status}</span>
+      <span id="status">{tech.status}</span>
     </Container>
   );
 };

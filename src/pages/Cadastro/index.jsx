@@ -68,44 +68,55 @@ const Cadastro = ({ authorized, setAuthorized }) => {
 
   return (
     <Container>
-      <button onClick={() => history.push("/")}>Voltar</button>
+      <div className="logo">
+        <span className="spanLogo">Kenzie Hub</span>
+        <button onClick={() => history.push("/")}>Voltar</button>
+      </div>
+
       <form onSubmit={handleSubmit(onHandleSubmit)}>
+        <h3>Crie sua conta</h3>
+        <span className="sub">Rapido e grátis, vamos nessa</span>
+        <label htmlFor="">Nome</label>
         <input
           type="text"
           placeholder="Digite seu nome"
           {...register("name")}
         />
-        {errors.name?.message}
+        <span className="error">{errors.name?.message}</span>
+        <label htmlFor="">Email</label>
         <input
           type="email"
           placeholder="Digite seu email"
           {...register("email")}
         />
-        {errors.email?.message}
+        <span className="error">{errors.email?.message}</span>
+        <label htmlFor="">Senha</label>
         <input
           type="password"
           placeholder="Digite sua senha"
           {...register("password")}
         />
-        {errors.password?.message}
+        <span className="error">{errors.password?.message}</span>
+        <label htmlFor="">Confirmar senha</label>
         <input
           type="password"
           placeholder="Confirme sua senha"
           {...register("confirmPassword")}
         />
-        {errors.confirmPassword?.message}
+        <span className="error">{errors.confirmPassword?.message}</span>
+        <label htmlFor="">Selecionar módulo</label>
         <select {...register("course_module")}>
           <option value="Primeiro módulo (Introdução ao Frontend)">
-            Primeiro módulo (Introdução ao Frontend)
+            Primeiro módulo
           </option>
           <option value="Segundo módulo (Frontend Avançado)">
-            Segundo módulo (Frontend Avançado)
+            Segundo módulo
           </option>
           <option value="Terceiro módulo (Introdução ao Backend)">
-            Terceiro módulo (Introdução ao Backend)
+            Terceiro módulo
           </option>
           <option value="Quarto módulo (Backend Avançado)">
-            Quarto módulo (Backend Avançado)
+            Quarto módulo
           </option>
         </select>
         {errors.course_module?.message}
@@ -122,7 +133,7 @@ const Cadastro = ({ authorized, setAuthorized }) => {
           {...register("contact")}
         />
 
-        <button type="submit">Cadastrar</button>
+        <button className="btnCad" type="submit">Cadastrar</button>
       </form>
     </Container>
   );

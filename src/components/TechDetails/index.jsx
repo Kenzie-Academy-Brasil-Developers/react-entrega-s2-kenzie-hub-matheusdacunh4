@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-// import { Container } from "./styles";
+import { Container } from "./styles";
 import Modal from "react-modal";
 import api from "../../services/api";
 import { toast } from "react-toastify";
@@ -34,25 +34,75 @@ const TechDatails = ({
       });
   };
 
+  const modalStyled = {
+    overlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0)",
+    },
+    content: {
+      position: "absolute",
+      top: "45%",
+      right: "auto",
+      left: "50%",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      border: "1px solid rgba(0, 0, 0, 0)",
+      // background: "#fff"
+      backgroundColor: "rgba(0, 0, 0, 0)",
+      overflow: "hidden",
+      WebkitOverflowScrolling: "touch",
+      borderRadius: "4px",
+      outline: "none",
+      padding: "20px",
+    },
+  };
+
   return (
-    <Modal isOpen={modalDetIsOpen} onRequestClose={handleCloseDetModal}>
-      <button onClick={() => setDetIsOpen(false)}>Fechar</button>
-      <h2>Tecnologia Detalhes</h2>
-      <div>
-        <form onSubmit={handleSubmit(onHandleSubmit)}>
-          <input
-            disabled
-            type="text"
-            placeholder={techDetail.title}
-            {...register("title")}
-          />
-          <select disabled {...register("status")}>
-            <option value>{techDetail.status}</option>
-          </select>
-          <button style={{backgroundColor: "#59323F", color: "white"}} disabled>Salvar alterações</button>
-          <button type="submit">Excluir</button>
-        </form>
-      </div>
+    <Modal
+      isOpen={modalDetIsOpen}
+      onRequestClose={handleCloseDetModal}
+      style={modalStyled}
+    >
+      <Container>
+        <header>
+          <div>
+            <span>Tecnologia Detalhes</span>
+            <button onClick={() => setDetIsOpen(false)}>x</button>
+          </div>
+        </header>
+        <div>
+          <form onSubmit={handleSubmit(onHandleSubmit)}>
+            <label className="inputName">Nome do projeto</label>
+            <input
+              disabled
+              type="text"
+              placeholder={techDetail.title}
+              {...register("title")}
+            />
+            <label className="selectLabel">Status</label>
+            <select disabled {...register("status")}>
+              <option value>{techDetail.status}</option>
+            </select>
+            <div>
+              <button
+                className="altera"
+                style={{ backgroundColor: "#59323F", color: "white" }}
+                disabled
+              >
+                Salvar alterações
+              </button>
+              <button className="excluir" type="submit">
+                Excluir
+              </button>
+            </div>
+          </form>
+        </div>
+      </Container>
     </Modal>
   );
 };

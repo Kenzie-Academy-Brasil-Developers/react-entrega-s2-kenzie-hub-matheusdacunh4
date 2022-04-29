@@ -1,5 +1,5 @@
 import { Container } from "./styles";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Card from "../../components/Card";
 import api from "../../services/api";
@@ -8,15 +8,17 @@ import TechDatails from "../../components/TechDetails";
 
 const Dashboard = ({ authorized, setAuthorized }) => {
   const [techs, setTechs] = useState([]);
-  const [techDetail, setTechDetail] = useState([])
+  const [techDetail, setTechDetail] = useState([]);
   const [modalRegIsOpen, setRegIsOpen] = useState(false);
   const [modalDetIsOpen, setDetIsOpen] = useState(false);
+
+  const user = JSON.parse(localStorage.getItem("KenzieHub:user"));
 
   const history = useHistory();
 
   useEffect(() => {
-    const id = JSON.parse(localStorage.getItem("KenzieHub:user")).id;
-    api.get(`/users/${id}`).then((res) => setTechs(res.data.techs));
+    const userId = user.id;
+    api.get(`/users/${userId}`).then((res) => setTechs(res.data.techs));
   }, []);
 
   const handleOpenRegModal = () => {
@@ -34,12 +36,13 @@ const Dashboard = ({ authorized, setAuthorized }) => {
   };
 
   const handleClickModal = (tech) => {
-    handleOpenDetModal()
-    setTechDetail(tech)
-  }
+    handleOpenDetModal();
+    setTechDetail(tech);
+  };
 
   if (!authorized) {
-    return <Redirect to="/" />;
+    history.push("/");
+    window.location.reload();
   }
   return (
     <Container>
@@ -58,24 +61,35 @@ const Dashboard = ({ authorized, setAuthorized }) => {
         techDetail={techDetail}
       />
       <header>
-      <h1>KenzieHub</h1>
-      <button className="btnSair"
-        onClick={() => {
-          localStorage.clear();
-          setAuthorized(false);
-          history.push("/");
-        }}
-      >
-        Sair
-      </button>
+        <h1>KenzieHub</h1>
+        <button
+          className="btnSair"
+          onClick={() => {
+            localStorage.clear();
+            setAuthorized(false);
+            history.push("/");
+          }}
+        >
+          Sair
+        </button>
       </header>
-      <div className="overTechs">
-      <h3>Tecnologias</h3>
-      <button className="btnAdd" onClick={handleOpenRegModal}>+</button>
+      <div className="toWelcome">
+        <div className="toWelcomeInner">
+          <h2>Olá, {user.name}</h2>
+          <p>{user.course_module}</p>
+        </div>
       </div>
-      {techs.map((tech, idx) => (
-        <Card key={idx} tech={tech} handleClickModal={handleClickModal} />
-      ))}
+      <div className="overTechs">
+        <h3>Tecnologias</h3>
+        <button className="btnAdd" onClick={handleOpenRegModal}>
+          +
+        </button>
+      </div>
+      <div className="techs">
+        {techs.map((tech, idx) => (
+          <Card key={idx} tech={tech} handleClickModal={handleClickModal} />
+        ))}
+      </div>
     </Container>
   );
 };

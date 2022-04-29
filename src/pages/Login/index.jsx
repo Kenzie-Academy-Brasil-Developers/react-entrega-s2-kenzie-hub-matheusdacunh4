@@ -11,7 +11,7 @@ const Login = ({ authorized, setAuthorized }) => {
   const history = useHistory();
 
   const formSchema = yup.object().shape({
-    email: yup.string().required("Por favor digite seu email").email(),
+    email: yup.string().required("Por favor digite seu email").email("Email inválido"),
     password: yup.string().required("Por favor digite sua senha"),
   });
 
@@ -45,28 +45,42 @@ const Login = ({ authorized, setAuthorized }) => {
 
   return (
     <Container>
+      <span className="logo">Kenzie Hub</span>
       <form onSubmit={handleSubmit(onHandleSubmit)}>
+        <h3>Login</h3>
+        <label>Email</label>
         <input
           type="email"
           placeholder="Digite seu email"
           {...register("email")}
         />
-        {errors.email?.message}
+        {errors.email ? (
+          <span className="error">{errors.email.message}</span>
+        ) : (
+          <span className="hiddenSpan">sdjsdh</span>
+        )}
+        <label className="senha">Senha</label>
         <input
           type="password"
           placeholder="Digite sua senha"
           {...register("password")}
         />
-        {errors.password?.message}
-        <button type="submit">Entrar</button>
+        {errors.password ? (
+          <span className="error">{errors.password.message}</span>
+        ) : (
+          <span className="hiddenSpan">sdjsdh</span>
+        )}
+        <button className="btnEntrar" type="submit">Entrar</button>
+        <span className="spanCad">Ainda não possui uma conta?</span>
+        <button
+        className="btnCad"
+          onClick={() => {
+            history.push("/cadastro");
+          }}
+        >
+          Cadastre-se
+        </button>
       </form>
-      <button
-        onClick={() => {
-          history.push("/cadastro");
-        }}
-      >
-        Cadastre-se
-      </button>
     </Container>
   );
 };

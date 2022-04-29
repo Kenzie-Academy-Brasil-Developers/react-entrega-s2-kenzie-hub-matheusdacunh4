@@ -11,6 +11,7 @@ const Routes = () => {
     if (token) {
       setAuthorized(true);
     }
+    // window.location.reload();
   }, [authorized]);
   return (
     <Switch>
@@ -24,10 +25,7 @@ const Routes = () => {
         <Cadastro authorized={authorized} />
       </Route>
       <Route exact path="/dashboard">
-        <Dashboard
-          authorized={authorized}
-          setAuthorized={setAuthorized}
-        />
+        <Dashboard authorized={authorized} setAuthorized={setAuthorized} />
       </Route>
     </Switch>
   );
